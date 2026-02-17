@@ -1,0 +1,255 @@
+[gd_scene format=3 uid="uid://j7fq6nfda36s"]
+
+[ext_resource type="Script" uid="uid://c5iq78lkhhlkk" path="res://Game UI/custom_control_key.gd" id="1_1vg4d"]
+
+[node name="Controls" type="VBoxContainer" unique_id=112372386]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Button" parent="." unique_id=373776760]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../h_box/v_box2/up")
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "ℂ𝕆ℕ𝕋ℝ𝕆𝕃𝕊"
+
+[node name="h_box" type="HBoxContainer" parent="." unique_id=1090938713]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 19
+alignment = 1
+
+[node name="v_box1" type="VBoxContainer" parent="h_box" unique_id=950853451]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 13
+
+[node name="Label" type="Label" parent="h_box/v_box1" unique_id=1695993326]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_up"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "UP :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="h_box/v_box1" unique_id=1521954355]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_down"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "DOWN :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="h_box/v_box1" unique_id=99435040]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_left"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "LEFT :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="h_box/v_box1" unique_id=1245949790]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_right"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "RIGHT:"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="h_box/v_box1" unique_id=663387796]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_accept"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "BREAK :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="h_box/v_box1" unique_id=1042978980]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_text_delete"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "RE-ORIENTATE :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label7" type="Label" parent="h_box/v_box1" unique_id=1551090618]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_text_delete"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "UNDO :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label8" type="Label" parent="h_box/v_box1" unique_id=1964729262]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_end"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "DOUBLE UNDO :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label9" type="Label" parent="h_box/v_box1" unique_id=1738320677]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_end"
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "EXIT :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="v_box2" type="VBoxContainer" parent="h_box" unique_id=1818255547]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="up" type="Button" parent="h_box/v_box2" unique_id=876723289]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_up"
+focus_neighbor_top = NodePath("../../../Title")
+focus_neighbor_bottom = NodePath("../down")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "W"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_up"
+
+[node name="down" type="Button" parent="h_box/v_box2" unique_id=1450927091]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_down"
+focus_neighbor_top = NodePath("../up")
+focus_neighbor_bottom = NodePath("../left")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "S"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_down"
+
+[node name="left" type="Button" parent="h_box/v_box2" unique_id=2140065293]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_left"
+focus_neighbor_top = NodePath("../down")
+focus_neighbor_bottom = NodePath("../right")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "A"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_left"
+
+[node name="right" type="Button" parent="h_box/v_box2" unique_id=1042265460]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_right"
+focus_neighbor_top = NodePath("../left")
+focus_neighbor_bottom = NodePath("../break")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "D"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_right"
+
+[node name="break" type="Button" parent="h_box/v_box2" unique_id=1891927937]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_accept"
+focus_neighbor_top = NodePath("../right")
+focus_neighbor_bottom = NodePath("../re orientate")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "Space"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_accept"
+
+[node name="re orientate" type="Button" parent="h_box/v_box2" unique_id=804613442]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_text_backspace"
+focus_neighbor_top = NodePath("../break")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "R"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_text_backspace"
+
+[node name="undo" type="Button" parent="h_box/v_box2" unique_id=818948679]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_text_delete"
+focus_neighbor_top = NodePath("../break")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "U"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_text_delete"
+
+[node name="double undo" type="Button" parent="h_box/v_box2" unique_id=254664790]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_end"
+focus_neighbor_top = NodePath("../break")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "I"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_end"
+
+[node name="exit" type="Button" parent="h_box/v_box2" unique_id=1033717881]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ui_end"
+focus_neighbor_top = NodePath("../break")
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "O"
+script = ExtResource("1_1vg4d")
+Input_Action = &"ui_cancel"
