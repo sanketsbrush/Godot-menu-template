@@ -1,0 +1,664 @@
+[gd_scene format=3 uid="uid://lkie8kifssx6"]
+
+[ext_resource type="Shader" uid="uid://gmxpnwbbp8lu" path="res://Game UI/graphics_HDRI.gdshader" id="1_7hlfe"]
+[ext_resource type="Script" uid="uid://dkr8hqkob8cw5" path="res://Game UI/graphics_SUN.gd" id="2_2tn2k"]
+
+[sub_resource type="Gradient" id="Gradient_7hlfe"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.22700296)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2tn2k"]
+noise_type = 2
+frequency = 0.1
+fractal_type = 0
+cellular_jitter = 0.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hmo8y"]
+width = 111
+height = 111
+noise = SubResource("FastNoiseLite_2tn2k")
+color_ramp = SubResource("Gradient_7hlfe")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ld2hi"]
+metallic = 0.94
+metallic_specular = 1.0
+roughness = 0.0
+emission_enabled = true
+emission_energy_multiplier = 7.45
+emission_texture = SubResource("NoiseTexture2D_hmo8y")
+stencil_flags = 2
+
+[sub_resource type="SphereMesh" id="SphereMesh_ewyfh"]
+radius = 1.0
+height = 2.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7hlfe"]
+metallic_specular = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_7hlfe"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="GDScript" id="GDScript_2tn2k"]
+resource_name = "rotate"
+script/source = "#@tool
+extends Node3D
+
+#@onready var cam: Camera3D = $Node3D/Camera3D
+@onready var rot: Node3D = $Node3D
+
+var time:=0.0
+
+
+
+func _process(delta: float) -> void:
+	time+=delta
+	#cam.position.y=sin(time)*2
+	#cam.look_at(global_position,Vector3.UP)
+	rot.rotation_degrees.x=sin(time)*18
+	rotate_y(delta*0.5)
+	
+"
+
+[sub_resource type="Gradient" id="Gradient_2tn2k"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hmo8y"]
+gradient = SubResource("Gradient_2tn2k")
+width = 32
+height = 32
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2tn2k"]
+albedo_texture = SubResource("GradientTexture2D_hmo8y")
+albedo_texture_force_srgb = true
+metallic = 0.5
+roughness = 0.5
+uv1_triplanar = true
+uv1_triplanar_sharpness = 150.0
+uv1_world_triplanar = true
+texture_filter = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hmo8y"]
+size = Vector2(100, 100)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hmo8y"]
+shader = ExtResource("1_7hlfe")
+shader_parameter/rayleigh_strength = 1.0000000475
+shader_parameter/mie_strength = 1.0000000475
+shader_parameter/ozone_strength = 1.0000000475
+shader_parameter/atmosphere_density = 1.0000000475
+shader_parameter/exposure = 10.0
+shader_parameter/sun_disc_feather = 0.10000000475
+shader_parameter/sundisc_intensity = 10.0
+shader_parameter/use_debanding = true
+
+[sub_resource type="Sky" id="Sky_ld2hi"]
+sky_material = SubResource("ShaderMaterial_hmo8y")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_ewyfh"]
+background_mode = 2
+sky = SubResource("Sky_ld2hi")
+ssr_max_steps = 512
+ssr_fade_in = 0.016634898
+ssr_fade_out = 0.021949947
+ssr_depth_tolerance = 0.51
+ssao_radius = 2.0
+ssao_intensity = 4.5
+ssil_sharpness = 0.75
+sdfgi_use_occlusion = true
+sdfgi_cascades = 2
+sdfgi_min_cell_size = 0.4
+sdfgi_y_scale = 2
+fog_sun_scatter = 0.5
+fog_density = 0.05
+fog_sky_affect = 0.2
+volumetric_fog_density = 0.01
+volumetric_fog_sky_affect = 0.25
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_7hlfe"]
+auto_exposure_enabled = true
+auto_exposure_speed = 1.0
+dof_blur_far_distance = 20.0
+dof_blur_far_transition = 50.0
+dof_blur_near_distance = 5.0
+dof_blur_near_transition = 5.0
+
+[sub_resource type="Compositor" id="Compositor_7hlfe"]
+compositor_effects = Array[CompositorEffect]([null])
+
+[sub_resource type="GDScript" id="GDScript_7hlfe"]
+resource_name = "max graphics"
+script/source = "extends CheckBox
+
+@onready var shadows: CheckBox = $\"../menu/Graphics/shadows\"
+@onready var glow: CheckBox = $\"../menu/Graphics/glow\"
+@onready var fog: CheckBox = $\"../menu/Graphics/fog\"
+@onready var ssr: CheckBox = $\"../menu/Graphics/ssr\"
+@onready var ssil: CheckBox = $\"../menu/Graphics/ssil\"
+@onready var ssao: CheckBox = $\"../menu/Graphics/ssao\"
+@onready var sdfgi: CheckBox = $\"../menu/Graphics/sdfgi\"
+
+@onready var dof: CheckBox = $\"../menu/Camera effects/dof\"
+@onready var blur: CheckBox = $\"../menu/Camera effects/blur\"
+@onready var lens: CheckBox = $\"../menu/Camera effects/lens\"
+@onready var autoexposure: CheckBox = $\"../menu/Camera effects/autoexposure\"
+@onready var msaa: OptionButton = $\"../menu/Camera effects/msaa/msaa\"
+@onready var ssaa: OptionButton = $\"../menu/Camera effects/ssaa/ssaa\"
+@onready var taa: CheckBox = $\"../menu/Camera effects/taa\"
+
+
+func _on_toggled(toggled_on: bool) -> void:
+	
+	shadows.button_pressed=toggled_on
+	glow.button_pressed=toggled_on
+	fog.button_pressed=toggled_on
+	ssr.button_pressed=toggled_on
+	ssil.button_pressed=toggled_on
+	ssao.button_pressed=toggled_on
+	sdfgi.button_pressed=toggled_on
+	
+	dof.button_pressed=toggled_on
+	blur.button_pressed=toggled_on
+	lens.button_pressed=toggled_on
+	autoexposure.button_pressed=toggled_on
+	msaa.selected=3*int(toggled_on)
+	ssaa.selected=2*int(toggled_on)
+	taa.button_pressed=toggled_on
+"
+
+[sub_resource type="GDScript" id="GDScript_ld2hi"]
+resource_name = "graphics"
+script/source = "extends VBoxContainer
+@onready var environment: WorldEnvironment = $\"../../environment\"
+@onready var sun: DirectionalLight3D = $\"../../sun\"
+
+@onready var shadows: CheckBox = $shadows
+@onready var glow: CheckBox = $glow
+@onready var fog: CheckBox = $fog
+@onready var ssr: CheckBox = $ssr
+@onready var ssil: CheckBox = $ssil
+@onready var ssao: CheckBox = $ssao
+@onready var sdfgi: CheckBox = $sdfgi
+
+func _process(_delta: float) -> void:if visible:
+	environment.environment.ssr_enabled=ssr.button_pressed
+	environment.environment.ssao_enabled=ssao.button_pressed
+	environment.environment.ssil_enabled=ssil.button_pressed
+	environment.environment.sdfgi_enabled=sdfgi.button_pressed
+	environment.environment.glow_enabled=glow.button_pressed
+	environment.environment.volumetric_fog_enabled=fog.button_pressed
+	sun.shadow_enabled=shadows.button_pressed
+"
+
+[sub_resource type="GDScript" id="GDScript_ewyfh"]
+resource_name = "camera_effects"
+script/source = "extends VBoxContainer
+
+@onready var environment: WorldEnvironment = $\"../../environment\"
+@onready var dof: CheckBox = $dof
+@onready var blur: CheckBox = $blur
+@onready var lens: CheckBox = $lens
+@onready var autoexposure: CheckBox = $autoexposure
+@onready var msaa: OptionButton = $msaa/msaa
+@onready var ssaa: OptionButton = $ssaa/ssaa
+@onready var taa: CheckBox = $taa
+
+func _ready() -> void:
+	get_viewport().set_msaa_2d(Viewport.MSAA_4X)
+
+func _process(_delta: float) -> void:if visible:
+	environment.camera_attributes.dof_blur_far_enabled=dof.button_pressed
+	environment.camera_attributes.dof_blur_near_enabled=dof.button_pressed
+	environment.camera_attributes.auto_exposure_enabled=autoexposure.button_pressed
+	var vp=get_viewport()
+	vp.msaa_3d=msaa.selected
+	
+	vp.screen_space_aa=ssaa.selected
+	vp.use_taa=taa.button_pressed
+"
+
+[sub_resource type="GDScript" id="GDScript_dikai"]
+resource_name = "window_controls"
+script/source = "extends VBoxContainer
+
+@onready var show_res: Label = $resolution/show_res
+@onready var resolution: HSlider = $resolution/resolution
+
+var res:=0.0
+
+func _ready() -> void:
+	res=resolution.value
+	get_window().set_scaling_3d_scale(resolution.value)
+
+func _process(_delta: float) -> void:if visible:
+	var w=get_window()
+	show_res.text=\"RESOLUTION: %dX%d\" % [int(w.size.x*res) , int(w.size.y*res)]
+
+func _on_resolution_value_changed(value: float) -> void:
+	get_window().set_scaling_3d_scale(value)
+	res=value
+
+func _on_windowmode_item_selected(index: int) -> void:
+	get_window().set_mode(index)
+
+func _on_upscale_item_selected(index: int) -> void:
+	get_window().set_scaling_3d_mode(index)
+	
+"
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_7hlfe"]
+color = Color(0, 0, 0, 0.50980395)
+thickness = 16
+
+[node name="graphics" type="VBoxContainer" unique_id=1835142125]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Button" parent="." unique_id=2030185272]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../h_box/v_box2/up")
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "𝔾ℝ𝔸ℙℍ𝕀ℂ𝕊"
+
+[node name="Demo" type="Node3D" parent="." unique_id=362594006]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Demo" unique_id=1821199173]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -1)
+material_override = SubResource("StandardMaterial3D_ld2hi")
+mesh = SubResource("SphereMesh_ewyfh")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Demo" unique_id=1230299331]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 1, 1, 1)
+material_override = SubResource("StandardMaterial3D_7hlfe")
+mesh = SubResource("BoxMesh_7hlfe")
+
+[node name="Node3D" type="Node3D" parent="Demo" unique_id=1933961889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = SubResource("GDScript_2tn2k")
+
+[node name="Node3D" type="Node3D" parent="Demo/Node3D" unique_id=501336661]
+
+[node name="Camera3D" type="Camera3D" parent="Demo/Node3D/Node3D" unique_id=1455429059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Demo" unique_id=1277103809]
+material_override = SubResource("StandardMaterial3D_2tn2k")
+mesh = SubResource("PlaneMesh_hmo8y")
+
+[node name="environment" type="WorldEnvironment" parent="." unique_id=176648648]
+environment = SubResource("Environment_ewyfh")
+camera_attributes = SubResource("CameraAttributesPractical_7hlfe")
+compositor = SubResource("Compositor_7hlfe")
+
+[node name="sun" type="DirectionalLight3D" parent="." unique_id=1703170884]
+transform = Transform3D(1, 0, 0, 0, -0.9874138, 0.1581582, 0, -0.1581582, -0.9874138, 0, 0, 0)
+light_color = Color(1, 0.98969334, 0.96931994, 1)
+shadow_enabled = true
+shadow_bias = 0.02
+script = ExtResource("2_2tn2k")
+sun_speed = 0.25
+
+[node name="max_out" type="CheckBox" parent="." unique_id=689429691]
+layout_mode = 2
+size_flags_horizontal = 0
+tooltip_text = "AVG"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 23
+text = "𝕄𝔸𝕏 𝕆𝕌𝕋"
+alignment = 1
+script = SubResource("GDScript_7hlfe")
+
+[node name="menu" type="HBoxContainer" parent="." unique_id=412587485]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect3" type="ColorRect" parent="menu" unique_id=2012725374]
+custom_minimum_size = Vector2(11, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 0.42352942)
+
+[node name="Graphics" type="VBoxContainer" parent="menu" unique_id=1576006027]
+layout_mode = 2
+size_flags_horizontal = 3
+script = SubResource("GDScript_ld2hi")
+
+[node name="shadows" type="CheckBox" parent="menu/Graphics" unique_id=434062954]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "AVG"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "SHADOWS"
+
+[node name="glow" type="CheckBox" parent="menu/Graphics" unique_id=383238527]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "FAST"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "GLOW"
+
+[node name="fog" type="CheckBox" parent="menu/Graphics" unique_id=1361316708]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "SLOW"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "FOG"
+
+[node name="ssr" type="CheckBox" parent="menu/Graphics" unique_id=1789879716]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "AVG"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "SSR        SCREEN SPACE REFLECTIONS"
+
+[node name="ssil" type="CheckBox" parent="menu/Graphics" unique_id=1016062792]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "AVG"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "SSIL        SCREEN SPACE INDIRECT LIGHTING"
+
+[node name="ssao" type="CheckBox" parent="menu/Graphics" unique_id=1358002227]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "FAST"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "SSAO      SCREEN SPACE AMBIENT OCCLUSION"
+
+[node name="sdfgi" type="CheckBox" parent="menu/Graphics" unique_id=1818524090]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "SLOW"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "SDFGI     SIGNED DISTANCE FIELD GLOBAL ILLUMINATION "
+
+[node name="ColorRect" type="ColorRect" parent="menu" unique_id=263129056]
+custom_minimum_size = Vector2(11, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 0.42352942)
+
+[node name="Camera effects" type="VBoxContainer" parent="menu" unique_id=1752097704]
+layout_mode = 2
+size_flags_horizontal = 3
+script = SubResource("GDScript_ewyfh")
+
+[node name="dof" type="CheckBox" parent="menu/Camera effects" unique_id=608440272]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "AVG"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "DEPTH OF FIELD BLUR"
+
+[node name="blur" type="CheckBox" parent="menu/Camera effects" unique_id=652157781]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "FAST"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "MOTION BLUR \"NULL\""
+
+[node name="lens" type="CheckBox" parent="menu/Camera effects" unique_id=1180262073]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "FAST"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "LENS FLARE  \"NULL\""
+
+[node name="autoexposure" type="CheckBox" parent="menu/Camera effects" unique_id=158979215]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "AVG"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "AUTO EXPOSURE"
+
+[node name="msaa" type="HBoxContainer" parent="menu/Camera effects" unique_id=1969752480]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/Camera effects/msaa" unique_id=1449258750]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "MSAA   MULTI SAMPLE ANTIALIASING :"
+vertical_alignment = 1
+
+[node name="msaa" type="OptionButton" parent="menu/Camera effects/msaa" unique_id=1891798668]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "2X FAST
+4X AVF
+8X SLOW"
+focus_mode = 0
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+alignment = 1
+selected = 0
+allow_reselect = true
+item_count = 4
+popup/item_0/text = "OFF"
+popup/item_0/id = 0
+popup/item_1/text = "2X"
+popup/item_1/id = 1
+popup/item_2/text = "4X"
+popup/item_2/id = 2
+popup/item_3/text = "8X"
+popup/item_3/id = 3
+
+[node name="ssaa" type="HBoxContainer" parent="menu/Camera effects" unique_id=1597132963]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/Camera effects/ssaa" unique_id=1944765970]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "SSAA   SCREEN SPACE ANTIALIASING :  "
+vertical_alignment = 1
+
+[node name="ssaa" type="OptionButton" parent="menu/Camera effects/ssaa" unique_id=2113274478]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "FXAA      FAST APPROXIMATE ANTIALIASING
+SMAA     SUBPIXEL MORPHOLOGICAL ANTIALIASING"
+focus_mode = 0
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+alignment = 1
+selected = 0
+allow_reselect = true
+item_count = 3
+popup/item_0/text = "OFF"
+popup/item_0/id = 0
+popup/item_1/text = "FXAA"
+popup/item_1/id = 1
+popup/item_2/text = "SMAA"
+popup/item_2/id = 2
+
+[node name="taa" type="CheckBox" parent="menu/Camera effects" unique_id=1468750151]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "SLOW"
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 16
+text = "TAA        TEMPORAL ANTIALIASING"
+
+[node name="ColorRect2" type="ColorRect" parent="menu" unique_id=1317549770]
+custom_minimum_size = Vector2(11, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 0.42352942)
+
+[node name="Window controls" type="VBoxContainer" parent="menu" unique_id=1104326669]
+layout_mode = 2
+size_flags_horizontal = 3
+script = SubResource("GDScript_dikai")
+
+[node name="windowmode" type="HBoxContainer" parent="menu/Window controls" unique_id=716012639]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/Window controls/windowmode" unique_id=366488626]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "SET WINDOW MODE :"
+vertical_alignment = 1
+
+[node name="windowmode" type="OptionButton" parent="menu/Window controls/windowmode" unique_id=1297742079]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+alignment = 1
+selected = 2
+allow_reselect = true
+item_count = 5
+popup/item_0/text = "WINDOWED"
+popup/item_0/id = 0
+popup/item_1/text = "MINIMIZED"
+popup/item_1/id = 1
+popup/item_2/text = "MAXIMIZED"
+popup/item_2/id = 2
+popup/item_3/text = "FULLSCREEN"
+popup/item_3/id = 3
+popup/item_4/text = "EXCLUSIVE FULLSCREEN"
+popup/item_4/id = 4
+
+[node name="resolution" type="HBoxContainer" parent="menu/Window controls" unique_id=1410239011]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="show_res" type="Label" parent="menu/Window controls/resolution" unique_id=585932475]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "RESOLUTION: 1920X1080"
+vertical_alignment = 1
+
+[node name="resolution" type="HSlider" parent="menu/Window controls/resolution" unique_id=894068644]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+focus_mode = 0
+theme_override_styles/slider = SubResource("StyleBoxLine_7hlfe")
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="upscale" type="HBoxContainer" parent="menu/Window controls" unique_id=2071402124]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/Window controls/upscale" unique_id=754218598]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "UPSCALING :"
+vertical_alignment = 1
+
+[node name="upscale" type="OptionButton" parent="menu/Window controls/upscale" unique_id=1022095330]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "FXAA      FAST APPROXIMATE ANTIALIASING
+SMAA     SUBPIXEL MORPHOLOGICAL ANTIALIASING"
+focus_mode = 0
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+alignment = 1
+selected = 0
+allow_reselect = true
+item_count = 5
+popup/item_0/text = "OFF"
+popup/item_0/id = 0
+popup/item_1/text = "FSR"
+popup/item_1/id = 1
+popup/item_2/text = "FSR2"
+popup/item_2/id = 2
+popup/item_3/text = "METALFX SPATIAL"
+popup/item_3/id = 3
+popup/item_4/text = "METALFX TEMPORAL"
+popup/item_4/id = 4
+
+[node name="ColorRect4" type="ColorRect" parent="menu" unique_id=366014134]
+custom_minimum_size = Vector2(11, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 0.42352942)
+
+[node name="ColorRect4" type="ColorRect" parent="." unique_id=1332395418]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+color = Color(0, 0, 0, 0.42352942)
+
+[connection signal="toggled" from="max_out" to="max_out" method="_on_toggled"]
+[connection signal="item_selected" from="menu/Window controls/windowmode/windowmode" to="menu/Window controls" method="_on_windowmode_item_selected"]
+[connection signal="value_changed" from="menu/Window controls/resolution/resolution" to="menu/Window controls" method="_on_resolution_value_changed"]
+[connection signal="item_selected" from="menu/Window controls/upscale/upscale" to="menu/Window controls" method="_on_upscale_item_selected"]

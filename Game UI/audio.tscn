@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://pj3ojwne8i2b"]
+
+[ext_resource type="AudioStream" uid="uid://biatb03mo27kl" path="res://Game UI/BeepBox-Song.mp3" id="1_nnv3v"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_f31gr"]
+color = Color(0, 0, 0, 0.50980395)
+thickness = 16
+
+[sub_resource type="GDScript" id="GDScript_id7gb"]
+resource_name = "master audio"
+script/source = "extends HSlider
+
+func _on_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(\"Master\"),value)
+"
+
+[node name="Audio" type="VBoxContainer" unique_id=167348179]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Button" parent="." unique_id=1307792017]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../h_box/v_box2/up")
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "𝔸𝕌𝔻𝕀𝕆"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=186257515]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect3" type="ColorRect" parent="HBoxContainer" unique_id=923543879]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.42352942)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=838824917]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1825828910]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="music" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=633393073]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 16
+text = "MASTER SOUND"
+vertical_alignment = 1
+
+[node name="resolution" type="HSlider" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1182825303]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+focus_mode = 0
+theme_override_styles/slider = SubResource("StyleBoxLine_f31gr")
+min_value = -80.0
+max_value = 6.0
+script = SubResource("GDScript_id7gb")
+
+[node name="ColorRect2" type="ColorRect" parent="HBoxContainer" unique_id=1251249952]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 0.42352942)
+
+[node name="ColorRect4" type="ColorRect" parent="." unique_id=1204188539]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+size_flags_vertical = 8
+color = Color(0, 0, 0, 0.42352942)
+
+[node name="music" type="AudioStreamPlayer" parent="." unique_id=184039170]
+stream = ExtResource("1_nnv3v")
+autoplay = true
+
+[connection signal="value_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/resolution" to="HBoxContainer/VBoxContainer/HBoxContainer/resolution" method="_on_value_changed"]
