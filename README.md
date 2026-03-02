@@ -25,4 +25,4 @@ https://github.com/sphynx-owner/JFA_driven_motion_blur_addon
 
 *Sound effects : https://github.com/Calinou/kenney-ui-audio/tree/master
 
-<img width="1920" height="1080" alt="godot game ui" src="https://github.com/user-attachments/assets/44120454-4a63-49a9-8386-7f83e67a5a22" />
+![D](https://github.com/user-attachments/assets/d8459f9a-ed36-421d-8f17-439aa33c54d5)
