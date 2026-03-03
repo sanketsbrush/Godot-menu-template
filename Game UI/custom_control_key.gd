@@ -8,12 +8,15 @@ func _ready() -> void:
 	add_key(Input_Action,text)
 
 
+func _pressed() -> void:
+	text="Press the key"
+
 func _input(event: InputEvent) -> void:
 	if button_pressed and event is InputEventKey:
-		remove_key(Input_Action,text)
-		text=OS.get_keycode_string(event.keycode)
-		add_key(Input_Action,text)
-		button_pressed=false
+			remove_key(Input_Action,text)
+			text=OS.get_keycode_string(event.keycode)
+			add_key(Input_Action,text)
+			button_pressed=false
 
 
 func add_key(Action:StringName,key:String):
