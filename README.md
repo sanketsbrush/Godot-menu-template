@@ -7,7 +7,7 @@ Graphics, audio ,window ,customize controls.
 
 ⚠️ Motion blur is not available at the monent.
 
-*Motion Blur (unusable)  :
+*Motion Blur :
 
 https://youtu.be/m_KvYlYF3sA?si=ozUZpGnZ5qgGSDyW
 
