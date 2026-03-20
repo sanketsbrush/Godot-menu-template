@@ -1,9 +1,9 @@
 Add this folder in your project to use it.
 
-This is Godot game engine 3d game ui template.
+This is Godot game engine 3d game menu template.
 
 Using this UI template you can control:
-Graphics, audio / volumedb ,window ,customize controls.
+Graphics, audio ,window ,customize controls.
 
 ⚠️ Motion blur is not available at the monent.
 
