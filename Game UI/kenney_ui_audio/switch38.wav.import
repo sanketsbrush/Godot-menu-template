@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bktwv1tiv3ljf"
+path="res://.godot/imported/switch38.wav-db4aede08e864cf7d877f006b17903fc.sample"
+
+[deps]
+
+source_file="res://Game UI/kenney_ui_audio/switch38.wav"
+dest_files=["res://.godot/imported/switch38.wav-db4aede08e864cf7d877f006b17903fc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
