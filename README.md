@@ -1,3 +1,5 @@
+⚠️ This Project s merged with https://github.com/sanketsbrush/Godot-Extras.git and wont be updated anymore⚠️  
+
 Add this folder in your project to use it.
 
 This is Godot game engine 3d game menu template.
