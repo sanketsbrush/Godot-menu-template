@@ -1,4 +1,4 @@
-⚠️ This Project s merged with https://github.com/sanketsbrush/Godot-Extras.git and wont be updated anymore⚠️  
+⚠️This Project is merged with https://github.com/sanketsbrush/Godot-Extras.git and wont be updated here anymore⚠️  
 
 Add this folder in your project to use it.
 
